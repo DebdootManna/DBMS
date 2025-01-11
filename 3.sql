@@ -1,0 +1,197 @@
+CREATE TABLE Job (
+    job_id varchar2(15) NOT NULL UNIQUE,
+    job_title varchar2(30) NOT NULL,
+    min_sal number(7,2) NOT NULL,
+    max_sal number(7,2) NOT NULL
+);
+
+CREATE TABLE Employee (
+    emp_no number(10) CONSTRAINT emp_no_pk PRIMARY KEY,
+    emp_name varchar2(30) CONSTRAINT emp_name_nn NOT NULL,
+    emp_sal number(8,2) CONSTRAINT emp_sal_chk CHECK (emp_sal > 0),
+    emp_comm number(6,1) CONSTRAINT emp_comm_chk CHECK (emp_comm >= 0),
+    dept_no number(3) CONSTRAINT dept_no_nn NOT NULL
+);
+
+CREATE TABLE Deposit (
+    a_no varchar2(5) NOT NULL UNIQUE,
+    cname varchar2(15) NOT NULL,
+    bname varchar2(10) NOT NULL,
+    amount number(7,2) NOT NULL,
+    a_date date NOT NULL
+);
+
+CREATE TABLE Borrow (
+    loanno varchar2(5) NOT NULL UNIQUE,
+    cname varchar2(15) NOT NULL,
+    bname varchar2(15) NOT NULL,
+    amount number(7,2) NOT NULL
+);
+INSERT INTO Employee(emp_no,emp_name,emp_sal,emp_comm,dept_no)VALUES(101,'Smith',800,455,20);
+INSERT INTO Employee(emp_no,emp_name,emp_sal,emp_comm,dept_no)VALUES(102,'Snehal',1600,0,25);
+INSERT INTO Employee(emp_no,emp_name,emp_sal,emp_comm,dept_no)VALUES(103,'Adama',1100,425,20);
+INSERT INTO Employee(emp_no,emp_name,emp_sal,dept_no)VALUES(104,'Aman',3000,15);
+INSERT INTO Employee(emp_no,emp_name,emp_sal,emp_comm,dept_no)VALUES(105,'Anita',5000,50000,10);
+INSERT INTO Employee(emp_no,emp_name,emp_sal,dept_no)VALUES(106,'Anamika',2975,30);
+
+SELECT * FROM Employee;
+
+INSERT INTO Job(Job_id,Job_title,min_sal,max_sal)VALUES('IT PROG','Programmer',4000,10000);
+INSERT INTO Job(Job_id,Job_title,min_sal,max_sal)VALUES('MK MGR','Marketing Manager',9000,15000);
+INSERT INTO Job(Job_id,Job_title,min_sal,max_sal)VALUES('FI MGR','Finance Manager',8200,12000);
+INSERT INTO Job(Job_id,Job_title,min_sal,max_sal)VALUES('FI ACC','Account',4200,9000);
+INSERT INTO Job(Job_id,Job_title,min_sal,max_sal)VALUES('LEC','Lecturer',6000,17000);
+INSERT INTO Job(Job_id,Job_title,min_sal,max_sal)VALUES('COMP OP','Computer Operator',1500,13000);
+
+SELECT * FROM Job;
+
+INSERT INTO Deposit(a_no,cname,bname,amount,a_date)VALUES('101','Anil','andheri',7000,TO_DATE('01-01-2006','DD-MM-YYYY'));
+INSERT INTO Deposit(a_no,cname,bname,amount,a_date)VALUES('102','sunil','virar',5000,TO_DATE('15-07-2006','DD-MM-YYYY'));
+INSERT INTO Deposit(a_no,cname,bname,amount,a_date)VALUES('103','jay','villeparle',6500,TO_DATE('12-03-2006','DD-MM-YYYY'));
+INSERT INTO Deposit(a_no,cname,bname,amount,a_date)VALUES('104','vijay','andheri',8000,TO_DATE('17-09-2006','DD-MM-YYYY'));
+INSERT INTO Deposit(a_no,cname,bname,amount,a_date)VALUES('105','keyur','dadar',7500,TO_DATE('19-11-2006','DD-MM-YYYY'));
+INSERT INTO Deposit(a_no,cname,bname,amount,a_date)VALUES('106','mayur','borivali',5500,TO_DATE('21-12-2006','DD-MM-YYYY'));
+
+SELECT * FROM Deposit;
+
+INSERT INTO Borrow(loanno,cname,bname,amount)VALUES('201','ANIL','VRCE',1000);
+INSERT INTO Borrow(loanno,cname,bname,amount)VALUES('206','MEHUL','AJNI',5000);
+INSERT INTO Borrow(loanno,cname,bname,amount)VALUES('311','SUNIL','DHARAMPETH',3000);
+INSERT INTO Borrow(loanno,cname,bname,amount)VALUES('321','MADHURI','ANDHERI',2000);
+INSERT INTO Borrow(loanno,cname,bname,amount)VALUES('375','PRMOD','VIRAR',8000);
+INSERT INTO Borrow(loanno,cname,bname,amount)VALUES('481','KRANTI','NEHRU PLACE',3000);
+
+SELECT * FROM Borrow;
+
+--Q_1
+DROP TABLE Employee
+CREATE TABLE SUPPLIER AS SELECT * FROM EMPLOYEE;
+DESCRIBE SUPPLIER;
+SELECT * FROM SUPPLIER
+
+CREATE TABLE SUP1 AS SELECT EMP_NO,EMP_NAME FROM EMPLOYEE;
+DESCRIBE SUP1;
+SELECT * FROM SUP1
+
+CREATE TABLE SUP2 AS SELECT * FROM EMPLOYEE WHERE 1=0;
+DESCRIBE SUP2
+SELECT * FROM SUP2
+
+INSERT INTO SUP2  select * FROM EMPLOYEE WHERE EMP_NAME='Anita';
+
+ALTER TABLE SUP2 RENAME TO SUP_2;
+SELECT * FROM SUP_2
+
+DROP TABLE SUP1
+DESCRIBE SUP1
+
+ALTER TABLE EMPLOYEE ADD PHONE VARCHAR2(10);
+SELECT * FROM EMPLOYEE
+DESCRIBE EMPLOYEE
+
+ALTER TABLE EMPLOYEE MODIFY PHONE CHAR(10)
+DESCRIBE EMPLOYEE
+
+
+ALTER TABLE SUP_2 DROP COLUMN EMP_NAME;
+DESCRIBE SUP_2;
+
+ALTER TABLE SUP_2 RENAME COLUMN EMP_SAL TO NEW_SAL;
+DESCRIBE SUP_2;
+
+
+
+--PRACRICAL 3
+--1
+SELECT *FROM EMPLOYEE;
+SELECT * FROM JOB;
+SELECT * FROM DEPOSIT
+--  2 
+SELECT JOB_TITLE,MAX_SAL
+FROM JOB
+
+-- 3
+SELECT  BNAME FROM DEPOSIT;
+SELECT BNAME  FROM BORROW;
+
+--4
+SELECT A_NO,AMOUNT FROM DEPOSIT WHERE A_DATE BETWEEN TO_DATE('01-01-2006', 'DD-MM-YYYY') 
+                  AND TO_DATE('25-07-2006', 'DD-MM-YYYY');
+--5
+SELECT CNAME FROM DEPOSIT WHERE A_DATE > TO_DATE('09-OCT-2006','DD-MM-YYYY');
+
+--6
+ SELECT EMP_NAME AS EMPLOYEE_NAME,EMP_SAL
+ FROM EMPLOYEE WHERE DEPT_NO=20;
+
+--7
+SELECT EMP_NO,EMP_NAME,DEPT_NO
+FROM EMPLOYEE WHERE DEPT_NO IN(10,20);
+ 
+ --8
+SELECT EMP_NO,EMP_NAME,DEPT_NO
+FROM EMPLOYEE WHERE DEPT_NO NOT IN(15,30)
+    AND DEPT_NO!=25;
+
+--9
+SELECT EMP_NO,EMP_NAME,DEPT_NO
+FROM EMPLOYEE WHERE DEPT_NO BETWEEN 15 AND 25;
+
+--10
+SELECT EMP_NAME FROM EMPLOYEE WHERE EMP_COMM IS NOT NULL;
+
+--11
+SELECT TO_CHAR(min_sal) || ' - ' || TO_CHAR(max_sal) AS COMBIN_SAL
+FROM JOB;
+
+--12
+INSERT INTO SUP_2(emp_no,NEW_SAL,emp_comm,dept_no) 
+SELECT EMP_NO,EMP_SAL,EMP_COMM,DEPT_NO  FROM Employee;
+SELECT * FROM SUP_2;
+
+--13
+DELETE FROM SUP1;
+ALTER  TABLE SUP1 RENAME  TO NEW_SUP;
+SELECT * FROM NEW_SUP;
+
+--14
+DELETE FROM SUP_2 WHERE EMP_NO=103;
+SELECT * FROM SUP_2;
+
+--15
+UPDATE EMPLOYEE SET EMP_NAME='Aman' WHERE EMP_NAME='Anita';
+SELECT * FROM EMPLOYEE;
+
+--16
+UPDATE EMPLOYEE SET EMP_NAME='DHAVAL_23CS060' WHERE EMP_NO=103;
+SELECT * FROM EMPLOYEE;
+
+--17
+SELECT MIN(MIN_SAL) AS MINIMUN_SAL,MAX(MAX_SAL) AS MAXIMUM_SAL FROM JOB;
+
+--18
+SELECT AVG(EMP_SAL) AS AVERAGE_SAL FROM EMPLOYEE;
+
+--19
+SELECT COUNT(*) AS TOTAL_ROWS,
+        COUNT(DISTINCT DEPT_NO) AS DISTINCT_DEPT_NO
+        FROM EMPLOYEE WHERE EMP_SAL>1000;
+        
+--20
+SELECT * FROM EMPLOYEE ORDER BY EMP_NAME ASC,EMP_NO ASC;
+
+--21
+SELECT * FROM EMPLOYEE ORDER BY DEPT_NO ASC,EMP_COMM DESC;
+
+--22
+UPDATE EMPLOYEE SET EMP_COMM=500 WHERE DEPT_NO=20;
+SELECT * FROM EMPLOYEE;
+
+--23
+SELECT EMP_COMM,EMP_SAL FROM EMPLOYEE
+ORDER BY EMP_COMM ASC NULLS FIRST ,EMP_SAL DESC;
+
+--24
+SELECT EMP_COMM,EMP_NO FROM EMPLOYEE
+ORDER BY EMP_COMM ASC NULLS LAST ,EMP_NO DESC;
+
