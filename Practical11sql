@@ -1,0 +1,44 @@
+----------------------------------------------------------------------------- 11
+
+-- Step 1: Create Employee Table
+CREATE TABLE Employee (
+    emp_id NUMBER PRIMARY KEY,
+    name VARCHAR2(100),
+    age NUMBER
+);
+
+-- Step 2: Create Employee_Archive Table 
+CREATE TABLE Employee_Archive (
+    emp_id NUMBER PRIMARY KEY,
+    name VARCHAR2(100),
+    age NUMBER,
+    deleted_at TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+
+-- Step 3: Insert Sample Data
+INSERT INTO Employee VALUES (1, 'John Doe', 21);
+INSERT INTO Employee VALUES (2, 'Jane Smith', 25);
+INSERT INTO Employee VALUES (3, 'Alice Brown', 21);
+INSERT INTO Employee VALUES (4, 'Bob White', 30);
+COMMIT;
+
+-- Step 4: Create Trigger for Archiving Before Deletion
+CREATE OR REPLACE TRIGGER trg_archive_before_delete
+BEFORE DELETE ON Employee
+FOR EACH ROW
+BEGIN
+    -- Insert the deleted record into Employee_Archive
+    INSERT INTO Employee_Archive (emp_id, name, age)
+    VALUES (:OLD.emp_id, :OLD.name, :OLD.age);
+END;
+/
+
+-- Step 5: Create PL/SQL Block to Delete Employees Aged 21
+BEGIN
+    DELETE FROM Employee WHERE age = 21;
+    COMMIT;
+END;
+/
+
+SELECT * FROM Employee;          -- Should not have employees aged 21
+SELECT * FROM Employee_Archive;  -- Should contain archived records of deleted employees
