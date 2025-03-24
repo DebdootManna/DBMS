@@ -46,7 +46,7 @@ This is an active repository that will be updated throughout the semester with:
 ## Updates
 
 Last Updated: January 11, 2025
-Status: In Progress (Ongoing semester work)
+Status: Completed
 
 ---
 *This README will be updated as new practical assignments are added to the repository.*
