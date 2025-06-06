@@ -1,6 +1,6 @@
 # College DBMS Practicals
 
-This repository contains my Database Management System (DBMS) practical assignments and associated documentation for the academic semester. The collection includes SQL files and their corresponding documentation.
+This repository contains my Database Management System (DBMS) practical assignments and associated documentation from the academic semester. The collection includes SQL files and their corresponding documentation.
 
 ## Repository Structure
 
@@ -8,7 +8,7 @@ This repository contains my Database Management System (DBMS) practical assignme
 - Microsoft Word reports (`.docx`) 
 - PDF documentation (`.pdf`)
 
-## Current Contents
+## Contents
 
 ### SQL Scripts
 - SQL Basics (`1.sql`) - 3 KB
@@ -25,17 +25,10 @@ This repository contains my Database Management System (DBMS) practical assignme
 
 ## File Organization
 
-The repository currently contains:
+The repository contains:
 - SQL files ranging from 3 KB to 6 KB
 - Documentation files up to 7.5 MB
 - Supporting materials like LICENSE file
-
-## Note
-
-This is an active repository that will be updated throughout the semester with:
-- Additional practical assignments
-- Corresponding documentation
-- Updated reports and analyses
 
 ## Environment
 
@@ -43,10 +36,10 @@ This is an active repository that will be updated throughout the semester with:
 - Platform: macOS
 - File Types: SQL (.sql), Word (.docx), PDF (.pdf)
 
-## Updates
+## Project Status
 
 Last Updated: March 2025
-Status: Completed
+Status: Completed - Final Version
 
 ---
-*This README will be updated as new practical assignments are added to the repository.*
+*This repository represents the complete collection of DBMS practical assignments from the academic semester.*
